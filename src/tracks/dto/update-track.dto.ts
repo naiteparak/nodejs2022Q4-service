@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { faker } from '@faker-js/faker';
-import { IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsBoolean,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { CreateTrackDto } from './create-track.dto';
 
 export class UpdateTrackDto implements Partial<CreateTrackDto> {
@@ -31,4 +37,8 @@ export class UpdateTrackDto implements Partial<CreateTrackDto> {
   @IsOptional()
   @IsNumber()
   duration: number;
+
+  @IsOptional()
+  @IsBoolean()
+  isFavorite: boolean;
 }

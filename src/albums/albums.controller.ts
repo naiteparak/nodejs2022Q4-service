@@ -11,10 +11,10 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AlbumsService } from './albums.service';
-import { IAlbum } from './interfaces/albums.interface';
 import { IdParamDto } from '../common/id-param.dto';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
+import { AlbumsEntity } from './entities/albums.entity';
 
 @ApiTags('Albums')
 @Controller('album')
@@ -22,31 +22,31 @@ export class AlbumsController {
   constructor(private readonly albumsService: AlbumsService) {}
 
   @Get()
-  async findAll(): Promise<IAlbum[]> {
-    return this.albumsService.findAll();
+  async findAll(): Promise<AlbumsEntity[]> {
+    return await this.albumsService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param() params: IdParamDto): Promise<IAlbum> {
-    return this.albumsService.findOne(params);
+  async findOne(@Param() params: IdParamDto): Promise<AlbumsEntity> {
+    return await this.albumsService.findOne(params);
   }
 
   @Post()
-  async create(@Body() body: CreateAlbumDto): Promise<IAlbum> {
-    return this.albumsService.create(body);
+  async create(@Body() body: CreateAlbumDto): Promise<AlbumsEntity> {
+    return await this.albumsService.create(body);
   }
 
   @Put(':id')
   async update(
     @Param() params: IdParamDto,
     @Body() body: UpdateAlbumDto,
-  ): Promise<IAlbum> {
-    return this.albumsService.update(params, body);
+  ): Promise<AlbumsEntity> {
+    return await this.albumsService.update(params, body);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  async delete(@Param() params: IdParamDto) {
+  async delete(@Param() params: IdParamDto): Promise<void> {
     return this.albumsService.delete(params);
   }
 }

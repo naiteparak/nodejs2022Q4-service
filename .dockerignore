@@ -1,0 +1,14 @@
+node_modules
+dist
+doc
+test
+.env.example
+.eslintrc.js
+.gitignore
+.prettierrc
+docker-compose.yml
+Dockerfile-app
+Dockerfile-db
+nest-cli.json
+package-lock.json
+README.md

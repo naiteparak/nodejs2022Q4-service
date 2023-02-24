@@ -22,7 +22,7 @@ export class FavoritesController {
   @HttpCode(204)
   @Delete('track/:id')
   async deleteTrackFromFavorites(@Param() params: IdParamDto): Promise<void> {
-    await this.favoritesService.deleteTrackFromFavorites(params.id);
+    await this.favoritesService.deleteTrackFromFavorites(params);
   }
 
   @Post('/album/:id')
@@ -33,7 +33,7 @@ export class FavoritesController {
   @HttpCode(204)
   @Delete('album/:id')
   async deleteAlbumFromFavorites(@Param() params: IdParamDto): Promise<void> {
-    await this.favoritesService.deleteAlbumFromFavorites(params.id);
+    await this.favoritesService.deleteAlbumFromFavorites(params);
   }
 
   @Post('/artist/:id')
@@ -44,6 +44,6 @@ export class FavoritesController {
   @HttpCode(204)
   @Delete('artist/:id')
   async deleteArtistFromFavorites(@Param() params: IdParamDto): Promise<void> {
-    await this.favoritesService.deleteArtistFromFavorites(params.id);
+    await this.favoritesService.deleteArtistFromFavorites(params);
   }
 }

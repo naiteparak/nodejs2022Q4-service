@@ -3,60 +3,67 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { IUser, User } from './interfaces/users.interface';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as crypto from 'crypto';
 import { IdParamDto } from '../common/id-param.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
-import { DB } from './DB/db';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  findAll(): IUser[] {
-    return DB;
+  constructor(
+    @InjectRepository(UserEntity)
+    private usersRepository: Repository<UserEntity>,
+  ) {}
+
+  async findAll(): Promise<UserEntity[]> {
+    return await this.usersRepository.find();
   }
 
-  findOne(params: IdParamDto): IUser {
-    const user = DB.find((user) => user.id === params.id);
+  async findOne(params: IdParamDto): Promise<UserEntity> {
+    const user = await this.usersRepository.findOneBy({ id: params.id });
     if (!user) {
       throw new NotFoundException('No user with this id');
     }
     return user;
   }
 
-  create(body: CreateUserDto): IUser {
-    const user = new User({
+  async create(body: CreateUserDto): Promise<UserEntity> {
+    const user: UserEntity = await this.usersRepository.create({
       ...body,
       id: crypto.randomUUID(),
       version: 1,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
-    DB.push(user);
-    return user;
+    return await this.usersRepository.save(user);
   }
 
-  update(params: IdParamDto, body: UpdatePasswordDto): IUser {
-    const user = this.findOne(params);
+  async update(
+    params: IdParamDto,
+    body: UpdatePasswordDto,
+  ): Promise<UserEntity> {
+    const user: UserEntity = await this.findOne(params);
     if (user.password !== body.oldPassword) {
       throw new ForbiddenException('Old password is incorrect');
     }
-    const userIndex = DB.findIndex((user) => user.id === params.id);
-    const changedUser = new User({
-      ...user,
-      password: body.newPassword,
-      version: ++user.version,
-      updatedAt: 1,
-    });
-    DB.splice(userIndex, 1, changedUser);
-    return changedUser;
+    await this.usersRepository.update(
+      { id: params.id },
+      {
+        ...user,
+        password: body.newPassword,
+        version: ++user.version,
+        updatedAt: Date.now(),
+      },
+    );
+
+    return this.usersRepository.findOneBy({ id: params.id });
   }
 
-  delete(params: IdParamDto): void {
-    const userIndex = DB.findIndex((user) => user.id === params.id);
-    if (userIndex === -1) {
-      throw new NotFoundException('No user with this id');
-    }
-    DB.splice(userIndex, 1);
+  async delete(params: IdParamDto): Promise<void> {
+    const user = await this.findOne(params);
+    await this.usersRepository.delete(user.id);
   }
 }
