@@ -1,11 +1,11 @@
-import { Artist } from '../../artists/interfaces/artists.interface';
-import { Album } from '../../albums/interfaces/albums.interface';
-import { Track } from '../../tracks/interfaces/track.interface';
+import { ArtistsEntity } from '../../artists/entities/artists.entity';
+import { TracksEntity } from '../../tracks/entities/tracks.entity';
+import { AlbumsEntity } from '../../albums/entities/albums.entity';
 
 export default interface IFavorites {
-  artists: Artist[];
-  albums: Album[];
-  tracks: Track[];
+  artists: ArtistsEntity[];
+  albums: AlbumsEntity[];
+  tracks: TracksEntity[];
 }
 
 export class Favorites {

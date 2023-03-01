@@ -30,7 +30,7 @@ paths:
         - name: id
           required: true
           in: path
-          example: a90954e0-dc5b-4f0b-bb85-c69cf0a7deb1
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
           schema:
             type: string
       responses:
@@ -44,7 +44,7 @@ paths:
         - name: id
           required: true
           in: path
-          example: a90954e0-dc5b-4f0b-bb85-c69cf0a7deb1
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
           schema:
             type: string
       requestBody:
@@ -64,7 +64,7 @@ paths:
         - name: id
           required: true
           in: path
-          example: a90954e0-dc5b-4f0b-bb85-c69cf0a7deb1
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
           schema:
             type: string
       responses:
@@ -102,7 +102,7 @@ paths:
         - name: id
           required: true
           in: path
-          example: a90954e0-dc5b-4f0b-bb85-c69cf0a7deb1
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
           schema:
             type: string
       responses:
@@ -116,7 +116,7 @@ paths:
         - name: id
           required: true
           in: path
-          example: a90954e0-dc5b-4f0b-bb85-c69cf0a7deb1
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
           schema:
             type: string
       requestBody:
@@ -136,7 +136,7 @@ paths:
         - name: id
           required: true
           in: path
-          example: a90954e0-dc5b-4f0b-bb85-c69cf0a7deb1
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
           schema:
             type: string
       responses:
@@ -174,7 +174,7 @@ paths:
         - name: id
           required: true
           in: path
-          example: a90954e0-dc5b-4f0b-bb85-c69cf0a7deb1
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
           schema:
             type: string
       responses:
@@ -188,7 +188,7 @@ paths:
         - name: id
           required: true
           in: path
-          example: a90954e0-dc5b-4f0b-bb85-c69cf0a7deb1
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
           schema:
             type: string
       requestBody:
@@ -208,14 +208,182 @@ paths:
         - name: id
           required: true
           in: path
-          example: a90954e0-dc5b-4f0b-bb85-c69cf0a7deb1
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+        - Albums
+  "/track":
+    get:
+      operationId: TracksController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Tracks
+    post:
+      operationId: TracksController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateTrackDto"
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Tracks
+  "/track/{id}":
+    get:
+      operationId: TracksController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
           schema:
             type: string
       responses:
         '200':
           description: ''
       tags:
-        - Albums
+        - Tracks
+    put:
+      operationId: TracksController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateTrackDto"
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Tracks
+    delete:
+      operationId: TracksController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+        - Tracks
+  "/favs":
+    get:
+      operationId: FavoritesController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Favorites
+  "/favs/track/{id}":
+    post:
+      operationId: FavoritesController_addFavoriteTrack
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
+          schema:
+            type: string
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Favorites
+    delete:
+      operationId: FavoritesController_deleteTrackFromFavorites
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+        - Favorites
+  "/favs/album/{id}":
+    post:
+      operationId: FavoritesController_addFavoriteAlbum
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
+          schema:
+            type: string
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Favorites
+    delete:
+      operationId: FavoritesController_deleteAlbumFromFavorites
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+        - Favorites
+  "/favs/artist/{id}":
+    post:
+      operationId: FavoritesController_addFavoriteArtist
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
+          schema:
+            type: string
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Favorites
+    delete:
+      operationId: FavoritesController_deleteArtistFromFavorites
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 68280d15-5093-4e0e-80fd-147e796e252c
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+        - Favorites
 info:
   title: Library service
   description: The library API description
@@ -230,7 +398,7 @@ components:
       properties:
         login:
           type: string
-          example: Cathryn.McCullough19
+          example: Kaia.Toy77
         password:
           type: string
           example: password
@@ -245,7 +413,7 @@ components:
           example: password
         newPassword:
           type: string
-          example: PVLyix5BYjQ9kA6
+          example: mZ7BrIDw4HbOoXd
       required:
         - oldPassword
         - newPassword
@@ -254,7 +422,7 @@ components:
       properties:
         name:
           type: string
-          example: Krystal VonRueden
+          example: Mr. Margie Champlin III
         grammy:
           type: boolean
           example: true
@@ -266,10 +434,10 @@ components:
       properties:
         name:
           type: string
-          example: Krystal VonRueden
+          example: Nora Carroll
         grammy:
           type: boolean
-          example: true
+          example: false
       required:
         - name
         - grammy
@@ -278,10 +446,10 @@ components:
       properties:
         artistId:
           type: string
-          example: 92f6a22e-58c3-40dc-9f49-ce62f23edc65
+          example: e2eb1202-1130-40b4-93c0-6bc216b1fd44
         name:
           type: string
-          example: Fame
+          example: Indian Reservation (The Lament Of The Cherokee Reservation Indian)
         year:
           type: number
           example: 2022
@@ -292,12 +460,55 @@ components:
     UpdateAlbumDto:
       type: object
       properties:
+        artistId:
+          type: string
+          example: 24d00f4e-d2fd-4ff5-803e-b5fd023f5d3b
         name:
           type: string
-          example: Strawberry Fields Forever
+          example: Moonlight Serenade
         year:
           type: number
           example: 2022
       required:
         - name
         - year
+    CreateTrackDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Purple Haze
+        artistId:
+          type: string
+          example: edf9471e-b8bf-4584-b2da-70ce59601b76
+        albumId:
+          type: string
+          example: 2bd799f0-990f-4e45-99f6-d167e0a32cb6
+        duration:
+          type: number
+          example: 1522
+      required:
+        - name
+        - artistId
+        - albumId
+        - duration
+    UpdateTrackDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Celebration
+        artistId:
+          type: string
+          example: 95b1696c-7a73-487d-939d-7143aa69ad20
+        albumId:
+          type: string
+          example: 3ab7aceb-07ca-4082-ad48-459bdd61714c
+        duration:
+          type: number
+          example: 1797
+      required:
+        - name
+        - artistId
+        - albumId
+        - duration
